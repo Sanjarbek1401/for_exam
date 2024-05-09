@@ -1,3 +1,4 @@
+#Baxodirov Sanjarbek
 # Birinchi misol
 import psycopg2
 from colorama import Fore
