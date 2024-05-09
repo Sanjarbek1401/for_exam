@@ -143,6 +143,49 @@ class DbConnect:
         self.conn.commit()
         self.cur.close()
         self.conn.close()
+ # Beshinchi misol
+import psycopg2
+
+database_db = {
+    'host': 'localhost',
+    'user': 'postgres',
+    'password': '1425',
+    'database': 'n42',
+    'port': 5432
+}
+
+class DbConnect:
+    def __init__(self, database_db):
+        self.database_db = database_db
+        self.conn = None
+        self.cur = None
+
+    def __enter__(self):
+        self.conn = psycopg2.connect(**self.database_db)
+        self.cur = self.conn.cursor()
+        return self.cur
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.conn.commit()
+        self.cur.close()
+        self.conn.close()
+
+
+
+class Product:
+    def __init__(self, id: int|None= None, name:str|None =None, price:int|None =None, color:str|None=None,image:str|None=None):
+        self.id = id
+        self.name = name
+        self.price  = price
+        self.color = color
+        self.image = image
+        
+    def save(self):
+        with DbConnect(database_db) as cursor:
+            insert_query = 'INSERT INTO test.product(name, price, color, image) values (%s, %s,%S, %s);'
+            insert_params = (self.name, self.price, self.color,self.image,)
+            cursor.execute(insert_query, insert_params
+
         
 
         
